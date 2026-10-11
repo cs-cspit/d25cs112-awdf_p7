@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical 7: Auth & Middleware Pipeline</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="icon-badge">🔒</div>
+                <div>
+                    <h1>Practical 7 Task Hub</h1>
+                    <p class="subtitle">JWT Authentication & Middleware Pipeline</p>
+                </div>
+            </div>
+            
+            <div id="user-profile-bar" class="user-profile hidden">
+                <div class="user-info">
+                    <span class="user-icon">👤</span>
+                    <span id="user-email-display" class="user-email">user@example.com</span>
+                </div>
+                <button id="logout-btn" class="btn btn-secondary btn-sm">Logout 🚪</button>
+            </div>
+        </header>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="toast hidden"></div>
+
+        <!-- Auth Container (Register / Login) -->
+        <main id="auth-section" class="card auth-card">
+            <div class="tab-header">
+                <button id="tab-login" class="tab-btn active">Login</button>
+                <button id="tab-register" class="tab-btn">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form">
+                <h2>Welcome Back</h2>
+                <p class="form-desc">Log in with your credentials to access secured task management.</p>
+                
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" placeholder="student@charusat.edu.in" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-full">Sign In 🔑</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form hidden">
+                <h2>Create Account</h2>
+                <p class="form-desc">Register a new account. Passwords will be securely hashed with bcrypt.</p>
+                
+                <div class="form-group">
+                    <label for="register-email">Email Address</label>
+                    <input type="email" id="register-email" placeholder="student@charusat.edu.in" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" placeholder="At least 4 characters" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-full">Register Account 📝</button>
+            </form>
+        </main>
+
+        <!-- Tasks Dashboard (Protected Section) -->
+        <main id="dashboard-section" class="dashboard-grid hidden">
+            <!-- Left Panel: Create Task & Profile -->
+            <div class="side-panel">
+                <div class="card">
+                    <h3>➕ Add New Task</h3>
+                    <p class="card-desc">Protected API route verified by JWT Middleware.</p>
+                    
+                    <form id="create-task-form">
+                        <div class="form-group">
+                            <label for="task-title">Task Description</label>
+                            <input type="text" id="task-title" placeholder="e.g. Complete AWDF Practical 7" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-full">Add Task 🚀</button>
+                    </form>
+                </div>
+
+                <div class="card me-card">
+                    <h3>👤 User Info (/me Endpoint)</h3>
+                    <div id="me-info-box" class="info-box">
+                        <p><strong>Status:</strong> <span class="badge badge-success">Authenticated</span></p>
+                        <p><strong>Email:</strong> <span id="me-email">-</span></p>
+                        <p><strong>User ID:</strong> <span id="me-id">-</span></p>
+                        <button id="refresh-me-btn" class="btn btn-secondary btn-sm mt-2">Test GET /api/auth/me</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Tasks List -->
+            <div class="main-panel card">
+                <div class="panel-header">
+                    <h2>My Protected Tasks</h2>
+                    <span id="task-count-badge" class="badge badge-primary">0 Tasks</span>
+                </div>
+
+                <div id="tasks-loading" class="loading-spinner">Loading secured tasks...</div>
+                <div id="tasks-empty" class="empty-state hidden">
+                    <span class="empty-icon">📋</span>
+                    <p>No tasks found. Create one to get started!</p>
+                </div>
+
+                <ul id="tasks-list" class="tasks-list"></ul>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
