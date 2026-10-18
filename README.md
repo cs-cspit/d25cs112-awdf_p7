@@ -1,7 +1,7 @@
 # Practical 7: Authentication and Middleware Pipeline
 
 **Course**: Advanced Web Development Frameworks (ITUE301)  
-**Department**: IT/CE/CSE/AIML - Faculty of Technology & Engineering, CHARUSAT  
+**Department**: CSE - CSPIT, CHARUSAT  
 
 ---
 
